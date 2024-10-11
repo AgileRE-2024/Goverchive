@@ -57,6 +57,18 @@
                 </div>
             </div>
         </aside>
+        <div class="main">
+            <div class="judul">
+                <div class="nama">
+                    <h1>Roadmap</h1>
+                </div>
+                <div class="profile">
+                    <i class='bx bx-user-circle' ></i>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 </body>
 </html>

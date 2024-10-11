@@ -61,17 +61,109 @@
             <div class="judul">
                 <div class="nama">
                     <h1>Unit Kerja</h1>
-                    <i class='bx bx-edit'></i>
                 </div>
                 <div class="profile">
                     <i class='bx bx-user-circle' ></i>
                 </div>
             </div>
-            <div class="editbtn">
+            <div class="editbtn" onclick="openModal('newUnitModal')">
                 <p>New Unit</p>
                 <i class='bx bx-add-to-queue'></i>
             </div>
+            
+            <!-- Unit Kerja -->
+            <div class="unitkerja">
+                <div class="unitKerjaBox">
+                    <div class="unitHeader">
+                        <h2>Divisi 1</h2>
+                        <div class="headericons">
+                            <i class='bx bx-edit' onclick="openModal('unitKerjaModal')"></i>
+                            <i class='bx bx-trash'></i>
+                        </div>
+                    </div>
+                    <div class="unitContent">
+                        <div class="deskripsi">
+                            <h3>Deskripsi Unit</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        </div>
+                        <div class="tugasPokok">
+                            <h3>Tugas Pokok</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        </div>
+                        <div class="UIC">
+                            <h3>Unit In Charge</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        </div>
+                        <div class="alamat">
+                            <h3>Alamat</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    <!-- Modal for editing Unit Kerja -->
+    <div id="unitKerjaModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('unitKerjaModal')">&times;</span>
+            <h3>Edit Unit Kerja</h3>
+            <form action="#" method="POST">
+                <label for="unitDeskripsi">Deskripsi Unit:</label>
+                <textarea id="unitDeskripsi" name="unitDeskripsi" required>Lorem ipsum</textarea>
+                <br>
+                <label for="unitTugasPokok">Tugas Pokok:</label>
+                <textarea id="unitTugasPokok" name="unitTugasPokok" required>Lorem ipsum</textarea>
+                <br>
+                <label for="unitUIC">Unit In Charge:</label>
+                <input type="text" id="unitUIC" name="unitUIC" value="Lorem ipsum" required>
+                <br>
+                <label for="unitAlamat">Alamat:</label>
+                <textarea id="unitAlamat" name="unitAlamat" required>Lorem ipsum</textarea>
+                <br>
+                <button type="submit">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal for adding a new Unit Kerja -->
+    <div id="newUnitModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('newUnitModal')">&times;</span>
+            <h3>Add New Unit Kerja</h3>
+            <form action="#" method="POST">
+                <!-- Placeholder Form -->
+                <label for="unitName">Unit Name:</label>
+                <input type="text" id="unitName" name="unitName" required>
+                <br>
+                <label for="deskripsiUnit">Deskripsi Unit:</label>
+                <textarea id="deskripsiUnit" name="deskripsiUnit" required></textarea>
+                <br>
+                <label for="tugasPokok">Tugas Pokok:</label>
+                <textarea id="tugasPokok" name="tugasPokok" required></textarea>
+                <br>
+                <label for="unitInCharge">Unit In Charge:</label>
+                <input type="text" id="unitInCharge" name="unitInCharge" required>
+                <br>
+                <label for="alamat">Alamat:</label>
+                <textarea id="alamat" name="alamat" required></textarea>
+                <br>
+                <button type="submit">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        function openModal(modalId) {
+        document.getElementById(modalId).style.display = 'block';
+    }
+    
+    // Close modal
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = 'none';
+    }
+    </script>
+    
 </body>
 </html>

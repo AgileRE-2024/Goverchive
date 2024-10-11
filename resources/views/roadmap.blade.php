@@ -57,6 +57,57 @@
                 </div>
             </div>
         </aside>
+        <div class="main">
+            <div class="judul">
+                <div class="nama">
+                    <h1>Roadmap</h1>
+                </div>
+                <div class="profile">
+                    <i class='bx bx-user-circle' ></i>
+                </div>
+            </div>
+            <div class="divisi">
+                <select id="divisionDropdown" onchange="showRoadmap()">
+                    <option value="divisi1">DIVISI 1</option>
+                    <option value="divisi2">DIVISI 2</option>
+                    <option value="divisi3">DIVISI 3</option>
+                </select>
+            </div>
+            <!-- Roadmap Content -->
+            <div id="roadmapContent">
+                <div id="divisi1" class="roadmapSection">
+                    <h3>Roadmap Divisi 1</h3>
+                    <p>Coming Soon.</p>
+                </div>
+                <div id="divisi2" class="roadmapSection" style="display:none;">
+                    <h3>Roadmap Divisi 2</h3>
+                    <p>Coming Soon.</p>
+                </div>
+                <div id="divisi3" class="roadmapSection" style="display:none;">
+                    <h3>Roadmap Divisi 3</h3>
+                    <p>Coming Soon.</p>
+                </div>
+            </div>
+        </div>
     </div>
+
+
+    <!-- JavaScript -->
+    <script>
+        function showRoadmap() {
+            // Hide all roadmap sections
+            var roadmapSections = document.getElementsByClassName("roadmapSection");
+            for (var i = 0; i < roadmapSections.length; i++) {
+                roadmapSections[i].style.display = "none";
+            }
+
+            // Get the selected value from the dropdown
+            var selectedDivision = document.getElementById("divisionDropdown").value;
+
+            // Show the selected roadmap section
+            document.getElementById(selectedDivision).style.display = "block";
+        }
+    </script>
+
 </body>
 </html>
