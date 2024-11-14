@@ -8,7 +8,6 @@
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
     />
-
     <link rel="stylesheet" href="css/login.css" />
     <title>Goverchive</title>
 </head>
@@ -38,7 +37,6 @@
         </header>
 
         <main>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>

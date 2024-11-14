@@ -46,7 +46,6 @@
                         </a>
                     </div>
                 </div>
-
                 <div class="tab3">
                     <a href="#">
                         <div class="tab2box">
@@ -162,7 +161,6 @@
         function openModal(modalId) {
         document.getElementById(modalId).style.display = 'block';
     }
-
     // Close modal
     function closeModal(modalId) {
         document.getElementById(modalId).style.display = 'none';

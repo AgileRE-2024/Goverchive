@@ -225,7 +225,7 @@
             <form action="{{ route('organisasi.destroyVisiMisi', $unitUtama->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
                 @csrf
                 @method('DELETE')
-                <button type="submit"  
+                <button type="submit"
                 onclick="return confirm('Apakah Anda yakin ingin menghapus?')">Delete</button>
             </form>
         @endif

@@ -129,3 +129,216 @@ a {
     margin-bottom: 20px;
     border: none;
 }
+
+table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+th {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ccc;
+}
+
+td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+th {
+    background-color: #4caf50;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #ddd;
+}
+
+/* CSS khusus untuk tabel roadmap */
+.roadmap-table th {
+    background-color: #6aab9c; /* Hijau sedikit berbeda */
+    color: white;
+    font-weight: 700;
+}
+
+.roadmap-table tbody tr {
+    background-color: #fff;
+}
+
+.roadmap-table tbody tr:nth-child(even) {
+    background-color: #f4f4f4;
+}
+
+/* Tambahan untuk judul header besar */
+.header-title {
+    background-color: #6aab9c;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Gaya tombol */
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #6a7eab;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #6a7eab;
+}
+
+/* Styling dropdown */
+#section-select {
+    padding: 5px;
+    margin-right: 10px;
+}
+
+#programdetail {
+    background-color: #6a7eab;
+    color: #f4f4f4;
+    font-weight: 700;
+}
+
+#tata-kelola-program,
+#programtitle {
+    background-color: #6a7eab;
+    color: #f4f4f4;
+}
+
+/* Modal overlay styling */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Modal content styling */
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px 30px;
+    border: 1px solid #888;
+    width: 50%;
+    max-width: 648px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+/* Close button styling */
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Form styling */
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.form-container div {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Label styling */
+.form-container label {
+    font-weight: bold;
+    margin-bottom: 8px; /* Margin below label */
+    font-size: 14px;
+}
+
+/* Input and select styling */
+.form-container input[type="text"],
+.form-container select {
+    width: 100%;
+    padding: 40px; /* Increased padding for more height */
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    min-height: 44px; /* Ensures a minimum height */
+}
+
+/* Button styling */
+.form-container button {
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.form-container button:hover {
+    background-color: #45a049;
+}
+
+.roadmapform-content {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin: 24px 0px 24px 0px;
+}
+
+.roadmapform-content-option {
+    display: flex;
+    padding: 6px;
+}
+
+.placeholder {
+    color: rgba(0, 0, 0, 0.3); /* Light opacity */
+    font-style: italic;
+}
+
+/* When cell is active (user clicks), make text more visible */
+.placeholder:focus {
+    color: black;
+}
+
+.roadmapform-content label {
+    display: flex;
+    align-items: center;
+    margin-right: 12px;
+    justify-content: flex-start;
+    font-weight: 700;
+}
+
+.roadmapform-content select,
+input {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    width: 576px;
+    flex-grow: 1;
+}
