@@ -1,0 +1,298 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+}
+html {
+    scroll-behavior: smooth;
+}
+a {
+    text-decoration: none;
+    color: aliceblue;
+}
+.sidebar {
+    height: 100vh;
+    width: 240px;
+    background-color: #18181d;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.6s ease;
+    gap: 12px;
+}
+
+.tab1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 36px;
+    font-size: 20px;
+    color: aliceblue;
+}
+
+.tab2 {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 32px;
+}
+
+.tab2box {
+    display: flex;
+    padding-left: 32px;
+    height: 64px;
+    gap: 12px;
+    align-items: center;
+}
+
+.tab2box:hover {
+    background-color: #6aab9c;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.tab2box1 {
+    display: flex;
+    padding-left: 32px;
+    height: 64px;
+    gap: 12px;
+    align-items: center;
+    border-radius: 10px;
+    background-color: #6aab9c;
+}
+
+.tab2box p {
+    font-size: 16px;
+}
+
+.tab2box1 i {
+    font-size: 24px;
+}
+
+.tab2box i {
+    font-size: 24px;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+    gap: 16px;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    color: #000;
+    margin: 36px 32px 36px 32px;
+    overflow-y: auto;
+    min-width: 82%;
+    max-width: 82%;
+}
+
+.judul {
+    display: flex;
+    justify-content: space-between;
+    height: 100px;
+    align-items: center;
+}
+
+.nama {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+}
+.nama i {
+    font-size: 24px;
+}
+.profile {
+    display: block;
+    border-radius: 100px;
+}
+
+.profile i {
+    font-size: 60px;
+}
+
+.visiorganisasi,
+.tujuanorganisasi {
+    display: flex;
+    flex-direction: column;
+    border-style: groove;
+    border-color: #18181d;
+    border-width: 2px;
+    border-radius: 10px;
+    padding: 24px;
+    gap: 24px;
+    margin-top: 24px;
+    min-height: auto;
+}
+
+.visi,
+.tujuan {
+    display: flex;
+    justify-content: space-between;
+    min-height: auto;
+}
+
+.tujuanIT {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    min-height: 360px; /* Ensure this section doesn't shrink below a certain height */
+    border-style: groove;
+    border-color: #18181d;
+    border-width: 2px;
+    border-radius: 10px;
+    padding: 24px;
+    min-width: 100%;
+    max-width: 100%;
+    overflow: auto;
+}
+
+.headervisi,
+.headertujuan {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.custom-table {
+    width: 100%; /* Adjust table width */
+    border-collapse: collapse; /* Remove space between borders */
+    margin: 20px 0; /* Add margin around the table */
+    font-size: 16px; /* Font size */
+    text-align: left; /* Align text to the left */
+}
+
+.custom-table thead {
+    background-color: #f2f2f2; /* Light background color for the header */
+}
+
+.custom-table th,
+.custom-table td {
+    padding: 12px 15px; /* Padding inside cells */
+    border: 1px solid #ddd; /* Border color and thickness */
+}
+
+.custom-table th {
+    background-color: #6aab9c; /* Custom header background color */
+    color: white; /* Text color for header */
+}
+
+.custom-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9; /* Alternating row background color */
+}
+
+.custom-table tbody tr:nth-child(odd) {
+    background-color: #fff; /* Background color for odd rows */
+}
+
+.custom-table tbody tr:hover {
+    background-color: #f1f1f1; /* Highlight row on hover */
+}
+
+.custom-table td {
+    color: #333; /* Text color */
+}
+
+/* Border and width styling */
+.custom-table {
+    border: 2px solid #18181d; /* Outer border color and width */
+}
+
+/* General Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 8px;
+    width: 50%; /* Could be more or less, depending on screen size */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation-name: modalFadeIn;
+    animation-duration: 0.4s;
+}
+
+/* Modal Animation */
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Close Button */
+.modal-content .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.modal-content .close:hover,
+.modal-content .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Input Fields and Labels */
+.modal-content form label {
+    display: block;
+    margin: 8px 0 4px 0;
+    font-weight: bold;
+}
+
+.modal-content form select,
+.modal-content form input,
+.modal-content form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+/* Modal Save Button */
+.modal-content form button {
+    background-color: #6aab9c;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    margin-top: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.modal-content form button:hover {
+    background-color: #5d988a;
+}
+
+/* Optional: Add some padding to the text in the textarea */
+textarea {
+    resize: vertical; /* Allow vertical resizing */
+    min-height: 100px; /* Set a minimum height */
+}
