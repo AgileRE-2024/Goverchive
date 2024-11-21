@@ -14,14 +14,16 @@ class unitUtamaController extends Controller
 {
     $unitUtama = unitUtama::first();
     $allTujuanOrganisasi = TujuanOrganisasi::all(); // Get all records for display
-    $tujuanorganisasi = null;
-    $allTujuanIt = TujuanIt::with('tujuanOrganisasi')->get(); // No record for create, so set it to null
+    $tujuanorganisasi = null;  // No record for create, so set it to null
+    $allTujuanIt = TujuanIt::with('tujuanOrganisasi')->get();  // Make sure you're retrieving this data
+    $tujuanit = TujuanIt::first(); // Set to null for create or get the first record
 
     return view('organisasi', [
         'unitUtama' => $unitUtama,
         'tujuanorganisasi' => $tujuanorganisasi, // Pass null for create
         'allTujuanOrganisasi' => $allTujuanOrganisasi, // All records for display
-        'allTujuanIt' => $allTujuanIt
+        'allTujuanIt' => $allTujuanIt, // Make sure to pass allTujuanIt to the view
+        'tujuanit' => $tujuanit,
     ]);
 }
 
@@ -81,14 +83,13 @@ public function edit($id)
 
     public function updateTujuan(Request $request, $id)
     {
-        $validatedData = $request->validate([
-            'dimensi' => ['required','max:100','string'],
-            'egoal' => ['required','max:100','string'],
-            'tujuan-organisasi' => ['required','max:500','string'],
-        ]);
 
         $tujuanorganisasi = TujuanOrganisasi::findOrFail($id);
-        $tujuanorganisasi->update($validatedData);
+        $tujuanorganisasi->update([
+        'dimensi' => $request->dimensi,
+        'egoal' => $request->egoal,
+        'tujuan-organisasi' => $request->{'tujuan-organisasi'},
+        ]);
 
         return redirect('/organisasi')->with('success', 'Tujuan berhasil diperbarui');
     }
@@ -106,9 +107,9 @@ public function edit($id)
     }
 
 
-    public function destroys($id)
+    public function destroyTujuanOrganisasi($id)
     {
-        $tujuanorganisasi = TujuanOrganisasi::find($id);
+        $tujuanorganisasi = TujuanOrganisasi::findOrFail($id);
 
         if ($tujuanorganisasi) {
             $tujuanorganisasi->delete();
@@ -131,19 +132,25 @@ public function edit($id)
         return redirect('/organisasi')->with('success', 'Tujuan berhasil ditambahkan');
     }
 
-    public function updateTujuanIt(Request $request, $id)
+    public function editTujuanIt(Request $request, $id)
     {
-        $validatedData = $request->validate([
-            'dimensi' => ['required','max:100','string'],
-            'tujuanorganisasi_id' => ['required','max:100','integer'],
-            'tujuanIt' => ['required','max:500','string'],
-        ]);
-
-        $tujuanit = TujuanIt::findOrFail($id);
-        $tujuanit->update($validatedData);
-
-        return redirect('/organisasi')->with('success', 'Tujuan berhasil diperbarui');
+        $tujuanIt = TujuanIt::findOrFail($id);
+        $tujuanIt->update([
+        'dimensi' => $request->dimensi,
+        'tujuanorganisasi_id' => $request->tujuanorganisasi_id,
+        'tujuanIt' => $request->tujuanIt,
+    ]);
+        return redirect('/organisasi')->with('success', 'Visi dan Misi berhasil diperbarui');
     }
+
+    public function destroyTujuanIt($id)
+    {
+        $tujuanIt = TujuanIt::findOrFail($id);
+        $tujuanIt->delete();
+        return redirect('/organisasi')->with('success', 'Data berhasil dihapus!');
+    }
+
+
 }
 
 

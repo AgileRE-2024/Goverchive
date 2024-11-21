@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\unitKerjaController;
 use App\Http\Controllers\unitUtamaController;
+use App\Models\UnitKerja;
 use App\Models\unitUtama;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -50,14 +52,23 @@ Route::post('/organisasi/store-tujuan', [unitUtamaController::class, 'storeTujua
 Route::post('/organisasi/store-tujuanit', [unitUtamaController::class, 'storeTujuanIt'])->name('organisasi.storeTujuanIt')->middleware('auth');
 
 // Route untuk meng-handle update tujuan
+
 Route::put('/organisasi/update-tujuan/{id}', [unitUtamaController::class, 'updateTujuan'])->name('organisasi.updateTujuan')->middleware('auth');
+Route::put('/organisasi/update-tujuanit/{id}', [unitUtamaController::class, 'editTujuanIt'])->name('organisasi.editTujuanIt')->middleware('auth');
+
 Route::delete('/organisasi/delete-visi-misi/{id}', action: [unitUtamaController::class, 'destroy'])->name('organisasi.destroyVisiMisi')->middleware('auth');
 Route::delete('/organisasi/delete-tujuan-organisasi/{id}', action: [unitUtamaController::class, 'destroys'])->name('organisasi.destroystujuan')->middleware('auth');
+Route::delete('/organisasi/delete-tujuanit/{id}',[unitUtamaController::class,'destroyTujuanIt'])->name('organisasi.destroytujuanit')->middleware('auth');
 
+
+Route::post('/unit/store-unit', [unitKerjaController::class,'store'])->name('unit.store')->middleware('auth');
+Route::delete('/unit/{id}',[unitKerjaController::class, 'destroy'])->name('unit.destroy')->middleware('auth');
+Route::put('/unit/{id}', [unitKerjaController::class, 'update'])->name('unit.update')->middleware('auth');
 
 
 Route::get('/unit', function () {
-    return view('unit');
+    $unit = UnitKerja::all();
+    return view('unit',['unit'=>$unit]);
 })->middleware('auth');
 
 Route::get('/roadmap', function () {

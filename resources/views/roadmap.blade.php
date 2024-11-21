@@ -222,7 +222,7 @@
 
                                 <div class="roadmapform-content">
                                     <label for="baseline2022">Baseline 2022:</label>
-                                    <input type="text" id="baseline2022">
+                                    <textarea id="baseline2022"></textarea>
                                 </div>
 
                                 <div class="roadmapform-content">

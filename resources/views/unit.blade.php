@@ -74,35 +74,54 @@
 
             <!-- Unit Kerja -->
             <div class="unitkerja">
+            @if($unit->isEmpty())
+                <p>Tidak ada data unit kerja yang tersedia.</p>
+            @else
+                @foreach ($unit as $item)
                 <div class="unitKerjaBox">
                     <div class="unitHeader">
-                        <h2>Divisi 1</h2>
+                        <h2>{{$item->nama_divisi}}</h2>
                         @if(Auth::user()->posisi == 'manajer')
                         <div class="headericons">
-                            <i class='bx bx-edit' onclick="openModal('unitKerjaModal')"></i>
-                            <i class='bx bx-trash'></i>
+                            <i class='bx bx-edit' onclick="openEditModal(event, {{ $item->id }})"
+                                data-id="{{ $item->id }}"
+                                data-nama-divisi="{{ $item->nama_divisi }}"
+                                data-deskripsi-unit="{{ $item->deskripsi_unit }}"
+                                data-tugas-pokok="{{ $item->tugas_pokok }}"
+                                data-uic="{{ $item->uic }}"
+                                data-alamat="{{ $item->alamat }}"></i>
+                            <form action="{{route('unit.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Delete?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit">
+                                    <i class='bx bx-trash'></i>
+                                </button>
+                            </form>
                         </div>
                         @endif
                     </div>
+
                     <div class="unitContent">
                         <div class="deskripsi">
                             <h3>Deskripsi Unit</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                            <p>{{$item->deskripsi_unit}}</p>
                         </div>
                         <div class="tugasPokok">
                             <h3>Tugas Pokok</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                            <p>{{$item->tugas_pokok}}</p>
                         </div>
                         <div class="UIC">
                             <h3>Unit In Charge</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                            <p>{{$item->uic}}</p>
                         </div>
                         <div class="alamat">
                             <h3>Alamat</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                            <p>{{$item->alamat}}</p>
                         </div>
                     </div>
                 </div>
+                @endforeach
+            @endif
             </div>
         </div>
     </div>
@@ -111,18 +130,20 @@
         <div class="modal-content">
             <span class="close" onclick="closeModal('unitKerjaModal')">&times;</span>
             <h3>Edit Unit Kerja</h3>
-            <form action="#" method="POST">
+            <form action="{{ route('unit.update', ':id') }}" method="POST" id="editForm">
+                @csrf
+                @method('PUT')
                 <label for="unitDeskripsi">Deskripsi Unit:</label>
-                <textarea id="unitDeskripsi" name="unitDeskripsi" required>Lorem ipsum</textarea>
+                <textarea id="editDeskripsiUnit" name="deskripsi_unit" required></textarea>
                 <br>
                 <label for="unitTugasPokok">Tugas Pokok:</label>
-                <textarea id="unitTugasPokok" name="unitTugasPokok" required>Lorem ipsum</textarea>
+                <textarea id="editTugasPokok" name="tugas_pokok" required></textarea>
                 <br>
                 <label for="unitUIC">Unit In Charge:</label>
-                <input type="text" id="unitUIC" name="unitUIC" value="Lorem ipsum" required>
+                <input type="text" id="editUIC" name="uic" required>
                 <br>
                 <label for="unitAlamat">Alamat:</label>
-                <textarea id="unitAlamat" name="unitAlamat" required>Lorem ipsum</textarea>
+                <textarea id="editAlamat" name="alamat" required></textarea>
                 <br>
                 <button type="submit">Save</button>
             </form>
@@ -134,19 +155,20 @@
         <div class="modal-content">
             <span class="close" onclick="closeModal('newUnitModal')">&times;</span>
             <h3>Add New Unit Kerja</h3>
-            <form action="#" method="POST">
+            <form action="{{route('unit.store')}}" method="POST">
+                @csrf
                 <!-- Placeholder Form -->
                 <label for="unitName">Unit Name:</label>
-                <input type="text" id="unitName" name="unitName" required>
+                <input type="text" id="nama_divisi" name="nama_divisi" required>
                 <br>
                 <label for="deskripsiUnit">Deskripsi Unit:</label>
-                <textarea id="deskripsiUnit" name="deskripsiUnit" required></textarea>
+                <textarea id="deskripsi_unit" name="deskripsi_unit" required></textarea>
                 <br>
                 <label for="tugasPokok">Tugas Pokok:</label>
-                <textarea id="tugasPokok" name="tugasPokok" required></textarea>
+                <textarea id="tugas_pokok" name="tugas_pokok" required></textarea>
                 <br>
                 <label for="unitInCharge">Unit In Charge:</label>
-                <input type="text" id="unitInCharge" name="unitInCharge" required>
+                <input type="text" id="uic" name="uic" required>
                 <br>
                 <label for="alamat">Alamat:</label>
                 <textarea id="alamat" name="alamat" required></textarea>
@@ -165,6 +187,34 @@
     function closeModal(modalId) {
         document.getElementById(modalId).style.display = 'none';
     }
+
+    function openEditModal(event, id) {
+    const editButton = event.currentTarget;
+    const namaDivisi = editButton.dataset.namaDivisi;
+    const deskripsiUnit = editButton.dataset.deskripsiUnit;
+    const tugasPokok = editButton.dataset.tugasPokok;
+    const uic = editButton.dataset.uic;
+    const alamat = editButton.dataset.alamat;
+
+    document.getElementById('editDeskripsiUnit').value = deskripsiUnit;
+    document.getElementById('editTugasPokok').value = tugasPokok;
+    document.getElementById('editUIC').value = uic;
+    document.getElementById('editAlamat').value = alamat;
+
+    const form = document.getElementById('editForm');
+    form.action = form.action.replace(':id', id);  // Replace the placeholder with the actual ID
+
+    // Debugging: Log values to ensure they're correct
+    console.log('Form Action:', form.action);
+    console.log('Nama Divisi:', namaDivisi);
+    console.log('Deskripsi Unit:', deskripsiUnit);
+    console.log('Tugas Pokok:', tugasPokok);
+
+    openModal('unitKerjaModal');
+}
+
+
+
     </script>
 
 </body>
