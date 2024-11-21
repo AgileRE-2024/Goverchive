@@ -97,10 +97,7 @@
                                     <th colspan="2">Projek</th>
                                     <th rowspan="2">UIC</th>
                                     <th>Baseline</th>
-                                    <th>Target</th>
-                                    <th>Realisasi</th>
-                                    <th>Target</th>
-                                    <th>Realisasi</th>
+                                    <th colspan="4">Target</th>
                                 </tr>
                                 <tr>
                                     <th>BSC*</th>
@@ -231,18 +228,18 @@
                                 </div>
 
                                 <div class="roadmapform-content">
-                                    <label for="realisasi2023">Realisasi 2023:</label>
-                                    <input type="text" id="realisasi2023">
-                                </div>
-
-                                <div class="roadmapform-content">
                                     <label for="target2024">Target 2024:</label>
                                     <input type="text" id="target2024">
                                 </div>
 
                                 <div class="roadmapform-content">
-                                    <label for="realisasi2024">Realisasi 2024:</label>
-                                    <input type="text" id="realisasi2024">
+                                    <label for="target2025">Target 2025:</label>
+                                    <input type="text" id="target2025">
+                                </div>
+
+                                <div class="roadmapform-content">
+                                    <label for="target2026">Target 2026:</label>
+                                    <input type="text" id="target2026">
                                 </div>
 
                                 <button type="button" onclick="addRow()">Add</button>
@@ -318,9 +315,9 @@
             const uic = document.getElementById("uic").value;
             const baseline2022 = document.getElementById("baseline2022").value;
             const target2023 = document.getElementById("target2023").value;
-            const realisasi2023 = document.getElementById("realisasi2023").value;
-            const target2024 = document.getElementById("target2024").value;
-            const realisasi2024 = document.getElementById("realisasi2024").value;
+            const realisasi2023 = document.getElementById("target2024").value;
+            const target2024 = document.getElementById("target2025").value;
+            const realisasi2024 = document.getElementById("target2026").value;
 
             // Select the body element based on the chosen category
             const tableBody = document.getElementById(`${kategori}-body`);
