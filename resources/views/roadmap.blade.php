@@ -193,10 +193,23 @@
                                     <label for="bsc">BSC:</label>
                                     <select id="bsc"
                                     >
-                                        <option value="F01">F01</option>
-                                        <option value="C01">C01</option>
-                                        <option value="I01">I01</option>
-                                        <option value="G01">G01</option>
+                                    <option value="F01">F01 : Alignment of IT and business strategy</option>
+                                    <option value="F02">F02 : IT Compliance and support for business compliance with external laws and regulations</option>
+                                    <option value="F03">F03 : Commitment of executive management for making IT-related decisions</option>
+                                    <option value="F04">F04 : Managed IT-related business risk</option>
+                                    <option value="F05">F05 : Realised benefits from IT-enabled investments and services portfolio</option>
+                                    <option value="F06">F06 : Transparency of IT costs, benefits and risk</option>
+                                    <option value="C01">C01 : Delivery of IT services in line with business requirements</option>
+                                    <option value="C02">C02 : Adequate use of applications, information and technology solutions</option>
+                                    <option value="I01">I01 : IT agility</option>
+                                    <option value="I02">I02 : Security of information, processing infrastructure and applications</option>
+                                    <option value="I03">I03 : Optimisation of IT assets, resources and capabilities</option>
+                                    <option value="I04">I04 : Enablement and support of business processes by integrating applications and technology into business processes</option>
+                                    <option value="I05">I05 : Delivery of programmes delivering benefits, on time, on budget, and meeting requirements and quality standards</option>
+                                    <option value="I06">I06 : Availability of reliable and useful information for decision making</option>
+                                    <option value="I07">I07 : IT compliance with internal policies</option>
+                                    <option value="G01">G01 : Competent and motivated business and IT personnel</option>
+                                    <option value="G02">G02 : Knowledge, expertise and initiatives for business innovation</option>
                                     </select>
                                 </div>
 
