@@ -37,9 +37,6 @@
         </header>
 
         <main>
-            <?php 
-   session_start();
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -53,7 +50,13 @@
     <div class="loginbox">
         <div class="box form-box">
             <header>Login</header>
-            <form action="#" method="post">
+            @if (session()->has('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            @endif
+            <form action="/login" method="post">
                 @csrf
                 <div class="field input">
                     <label for="email">Email</label>
@@ -85,5 +88,6 @@
 
         </main>
     </div>
+
 </body>
 </html>

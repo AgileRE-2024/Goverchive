@@ -51,6 +51,14 @@
             height: 100px;
             margin-bottom: 10px;
         }
+        .edit-delete-tujuanit {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+        .edit-delete-tujuanit i{
+            font-size: 12px;
+        }
     </style>
     <title>Goverchive</title>
 </head>
@@ -90,12 +98,13 @@
                     </div>
                 </div>
                 <div class="tab3">
-                    <a href="#">
+                    <form action="/logout" method="POST">
+                        @csrf
                         <div class="tab2box">
                             <i class='bx bx-log-out-circle' ></i>
-                            <p>Logout</p>
+                            <button>logout</button>
                         </div>
-                    </a>
+                    </form>
                 </div>
             </div>
         </aside>
@@ -111,57 +120,100 @@
             <div class="visiorganisasi">
                 <div class="visi">
                     <h2>Visi dan Misi Organisasi</h2>
-                        <i class='bx bx-edit' onclick="openModal('visiModal')"></i>
+                    @if(Auth::user()->posisi == 'manajer')
+                        <i class='bx bx-edit' onclick="openModal('visiModal')" ></i>
+                    @endif
+
                 </div>
                 <div class="visivisi">
-                    <p id="visiContent">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+                    <h3>Visi</h3>
+                    <p id="visiContent">{{ $unitUtama->visi ?? 'Visi belum diatur.' }}</p>
+                    <h3>Misi</h3>
+                    <p id="misiContent">{{ $unitUtama->misi ?? 'Misi belum diatur.' }}</p>
                 </div>
+
             </div>
             <div class="tujuanorganisasi">
-                <div class="tujuan">
-                    <h2>Tujuan Organisasi</h2>
-                    <i class='bx bx-edit' onclick="openModal('tujuanOrganisasiModal')"></i>
-                </div>
-                <div class="tujuantujuan">
-                    <p id="tujuanContent">Lorem ipsum dolor sit amet...</p>
-                </div>
-            </div>
-            <div class="tujuanIT">
                 <div class="headertujuan">
-                    <h2>Tujuan IT</h2>
-                    <i class='bx bx-edit' onclick="openModal('tujuanITModal')"></i>
+                    <h2>Tujuan Organisasi</h2>
+                    @if(Auth::user()->posisi == 'manajer')
+                    <i class='bx bx-edit'  onclick="openModal('createTujuanOrganisasiModals') " data-testid="edit-icon"></i>
+                    @endif
                 </div>
                 <div class="tujuanIT2">
                     <table id="tujuanITTable" class="custom-table">
                         <thead>
                             <tr>
-                                <th>Category</th>
-                                <th>No</th>
+                                <th>Dimensi</th>
+                                <th>Enterprise Goal</th>
                                 <th>Description</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Placeholder untuk data Tujuan IT -->
+                            @if($allTujuanOrganisasi->isNotEmpty())
+                                @foreach ($allTujuanOrganisasi as $item)
+                                    <tr>
+                                        <td> <i class='bx bx-edit' data-id="{{ $item->id }}" onclick="openModal('edittujuanOrganisasiModals', {{ $item->id }})"></i> {{ $item->dimensi }}</td>
+                                        <td>{{ $item->egoal }}</td>
+                                        <td>{{ $item->{'tujuan-organisasi'} }} </td>
+
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="3">No records found.</td>
+                                </tr>
+                            @endif
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tujuanIT">
+                <div class="headertujuan">
+                    <h2>Tujuan IT</h2>
+                    @if(Auth::user()->posisi == 'manajer')
+                    <i class='bx bx-edit' onclick="openModal('createTujuanItModals')" data-testid="edit-icons"></i>
+                    @endif
+                </div>
+
+                <div class="tujuanIT2">
+                    <table id="tujuanITTable" class="custom-table">
+                        <thead>
                             <tr>
-                                <td>Financial</td>
-                                <td>1</td>
-                                <td>Provide a good return on investment of IT-enabled business investments.</td>
+                                <th>Dimesi IT BSC</th>
+                                <th>Tujuan Organisasi</th>
+                                <th>Tujuan IT</th>
                             </tr>
-                            <tr>
-                                <td>Customer</td>
-                                <td>4</td>
-                                <td>Improve customer orientation and service.</td>
-                            </tr>
-                            <tr>
-                                <td>Internal Process</td>
-                                <td>12</td>
-                                <td>Provide compliance with external laws, regulations, and contracts.</td>
-                            </tr>
-                            <tr>
-                                <td>Learning</td>
-                                <td>17</td>
-                                <td>Acquire and maintain skilled and motivated people.</td>
-                            </tr>
+                        </thead>
+                        <tbody>
+                            @if($allTujuanOrganisasi->isNotEmpty())
+                                @foreach ($allTujuanIt as $item)
+                                    <tr>
+                                        <td>
+                                            <div class="edit-delete-tujuanit">
+                                                <i class='bx bx-edit' data-id="{{ $item->id }}" onclick="openModal('editTujuanIt', {{ $item->id }})" data-testid="{{$item->id}}" ></i>
+                                                <form action="{{route('organisasi.destroytujuanit', $item->id) }}" method="POST" onsubmit="return confirm('Delete?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit">
+                                                        <i class='bx bx-trash'></i>
+                                                    </button>
+                                                </form>
+                                                {{ $item->dimensi }}
+                                            </div>
+                                        </td>
+                                        <td>{{ $item->tujuanOrganisasi->{'tujuan-organisasi'} }}</td>
+                                        <td>{{ $item->tujuanIt }} </td>
+
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="3">No records found.</td>
+                                </tr>
+                            @endif
+
                         </tbody>
                     </table>
                 </div>
@@ -174,41 +226,191 @@
         <div class="modal-content">
             <span class="close" onclick="closeModal('visiModal')">&times;</span>
             <h3>Edit Visi dan Misi</h3>
-            <textarea id="visiTextarea">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</textarea>
-            <button onclick="saveChanges('visiContent', 'visiTextarea')">Save</button>
+            <form action="{{ $unitUtama ? route('organisasi.updateVisiMisi', $unitUtama->id) : route('organisasi.storeVisiMisi') }}" method="POST">
+                @csrf
+                @if($unitUtama)
+                    @method('PUT')
+                @endif
+                <div>
+                    <label for="visiTextarea">Visi:</label>
+                    <textarea name="visi" id="visiTextarea">{{ $unitUtama->visi ?? '' }}</textarea>
+                </div>
+                <div>
+                    <label for="misiTextarea">Misi:</label>
+                    <textarea name="misi" id="misiTextarea">{{ $unitUtama->misi ?? '' }}</textarea>
+                </div>
+                <button type="submit">Save</button>
+            </form>
+            @if ($unitUtama)
+            <form action="{{ route('organisasi.destroyVisiMisi', $unitUtama->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
+                @csrf
+                @method('DELETE')
+                <button type="submit"
+                onclick="return confirm('Apakah Anda yakin ingin menghapus?')">Delete</button>
+            </form>
+        @endif
+
         </div>
     </div>
 
-    <!-- Modal for editing Tujuan Organisasi -->
-    <div id="tujuanOrganisasiModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('tujuanOrganisasiModal')">&times;</span>
-            <h3>Edit Visi dan Misi</h3>
-            <textarea id="tujuanOrganisasTextarea">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</textarea>
-            <button onclick="saveChanges('tujuanContent', 'tujuanOrganisasTextarea')">Save</button>
-        </div>
-    </div>
+    <!-- Modal for create Tujuan Organisasi -->
 
-    <!-- Modal for editing Tujuan IT -->
-    <div id="tujuanITModal" class="modal">
+
+    <div id="createTujuanOrganisasiModals" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal('tujuanITModal')">&times;</span>
-            <h3>Edit Tujuan IT</h3>
-            <form action="#" method="POST">
-                <!-- Form belum tersambung, hanya placeholder -->
-                <label for="category">Category:</label>
-                <select id="category" name="category" required>
+            <span class="close" onclick="closeModal('createTujuanOrganisasiModals')">&times;</span>
+            <h3>Create Tujuan Organisasi</h3>
+            <form action="{{ route('organisasi.storeTujuan') }}" method="POST">
+                @csrf
+
+                <label for="dimensi">Dimensi:</label>
+
+                <select id="dimensi" name="dimensi" required>
                     <option value="Financial">Financial</option>
                     <option value="Customer">Customer</option>
                     <option value="Internal Process">Internal Process</option>
                     <option value="Learning">Learning</option>
                 </select>
                 <br>
-                <label for="number">Number:</label>
-                <input type="number" id="number" name="number" required>
+
+                <label for="egoal">Enterprise Goal:</label>
+                <select id="egoal" name="egoal" required>
+                    <!-- Options will be dynamically loaded here -->
+                </select>
                 <br>
-                <label for="description">Tujuan IT:</label>
-                <textarea id="description" name="description" required></textarea>
+
+                <label for="tujuan-organisasi">Tujuan Organisasi:</label>
+                <textarea id="tujuan-organisasi" name="tujuan-organisasi" required></textarea>
+                <br>
+
+                <button type="submit">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="createTujuanItModals" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('createTujuanItModals')">&times;</span>
+            <h3>Create Tujuan It</h3>
+            <form action="{{ route('organisasi.storeTujuanIt') }}" method="POST">
+                @csrf
+
+                <label for="dimensi">Dimensi BSC:</label>
+
+                <select id="dimensi" name="dimensi" required>
+                    <option value="F01">F01 : Alignment of IT and business strategy</option>
+                    <option value="F02">F02 : IT Compliance and support for business compliance with external laws and regulations</option>
+                    <option value="F03">F03 : Commitment of executive management for making IT-related decisions</option>
+                    <option value="F04">F04 : Managed IT-related business risk</option>
+                    <option value="F05">F05 : Realised benefits from IT-enabled investments and services portfolio</option>
+                    <option value="F06">F06 : Transparency of IT costs, benefits and risk</option>
+                    <option value="C01">C01 : Delivery of IT services in line with business requirements</option>
+                    <option value="C02">C02 : Adequate use of applications, information and technology solutions</option>
+                    <option value="I01">I01 : IT agility</option>
+                    <option value="I02">I02 : Security of information, processing infrastructure and applications</option>
+                    <option value="I03">I03 : Optimisation of IT assets, resources and capabilities</option>
+                    <option value="I04">I04 : Enablement and support of business processes by integrating applications and technology into business processes</option>
+                    <option value="I05">I05 : Delivery of programmes delivering benefits, on time, on budget, and meeting requirements and quality standards</option>
+                    <option value="I06">I06 : Availability of reliable and useful information for decision making</option>
+                    <option value="I07">I07 : IT compliance with internal policies</option>
+                    <option value="G01">G01 : Competent and motivated business and IT personnel</option>
+                    <option value="G02">G02 : Knowledge, expertise and initiatives for business innovation</option>
+                </select>
+                <br>
+
+                <label for="tujuanorganisasi_id">Tujuan Organisasi</label>
+
+                <select name="tujuanorganisasi_id" id="tujuanorganisasi_id">
+                    @foreach ($allTujuanOrganisasi as $item)
+                        <option value="{{ $item->id }}">{{ $item->{'tujuan-organisasi'} }}</option>
+                    @endforeach
+                </select>
+                <br>
+
+                <label for="tujuanIt">Tujuan It:</label>
+                <textarea id="tujuanIt" name="tujuanIt" required></textarea>
+                <br>
+
+                <button type="submit">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal for editing Tujuan Organisasi -->
+    <div id="edittujuanOrganisasiModals" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('edittujuanOrganisasiModals')">&times;</span>
+            <h3>Edit Tujuan Organisasi</h3>
+
+            <!-- Add id="editTujuanItForm" to the form so we can update its action dynamically -->
+            <form id="editTujuanOrganisasiForm" action="{{ route('organisasi.updateTujuan', ':id') }}" method="POST">
+                @method('PUT')
+                @csrf
+                <label for="editDimensi">Dimensi:</label>
+                <select id="editDimensi" name="dimensi" required>
+                    <option value="Financial">Financial</option>
+                    <option value="Customer">Customer</option>
+                    <option value="Internal Process">Internal Process</option>
+                    <option value="Learning">Learning</option>
+                </select>
+                <br>
+
+                <label for="editEgoal">Enterprise Goal:</label>
+                <select id="editEgoal" name="egoal" required>
+                    <!-- Options will be dynamically loaded here -->
+                </select>
+                <br>
+                <label for="tujuan-organisasi">Tujuan Organisasi:</label>
+                <textarea id="tujuan-organisasi" name="tujuan-organisasi" required></textarea>
+                <br>
+                <button type="submit">Save</button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Modal for editing Tujuan IT -->
+    <div id="editTujuanIt" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('editTujuanIt')">&times;</span>
+            <h3>Edit Tujuan IT</h3>
+
+            <!-- Add id="editTujuanItForm" to the form so we can update its action dynamically -->
+            <form id="editTujuanItForm" action="{{ route('organisasi.editTujuanIt', ':id') }}" method="POST">
+                @method('PUT')
+                @csrf
+                <label for="dimensi">Dimensi BSC:</label>
+                <select id="dimensi" name="dimensi" required>
+                    <option value="F01">F01 : Alignment of IT and business strategy</option>
+                    <option value="F02">F02 : IT Compliance and support for business compliance with external laws and regulations</option>
+                    <option value="F03">F03 : Commitment of executive management for making IT-related decisions</option>
+                    <option value="F04">F04 : Managed IT-related business risk</option>
+                    <option value="F05">F05 : Realised benefits from IT-enabled investments and services portfolio</option>
+                    <option value="F06">F06 : Transparency of IT costs, benefits and risk</option>
+                    <option value="C01">C01 : Delivery of IT services in line with business requirements</option>
+                    <option value="C02">C02 : Adequate use of applications, information and technology solutions</option>
+                    <option value="I01">I01 : IT agility</option>
+                    <option value="I02">I02 : Security of information, processing infrastructure and applications</option>
+                    <option value="I03">I03 : Optimisation of IT assets, resources and capabilities</option>
+                    <option value="I04">I04 : Enablement and support of business processes by integrating applications and technology into business processes</option>
+                    <option value="I05">I05 : Delivery of programmes delivering benefits, on time, on budget, and meeting requirements and quality standards</option>
+                    <option value="I06">I06 : Availability of reliable and useful information for decision making</option>
+                    <option value="I07">I07 : IT compliance with internal policies</option>
+                    <option value="G01">G01 : Competent and motivated business and IT personnel</option>
+                    <option value="G02">G02 : Knowledge, expertise and initiatives for business innovation</option>
+                </select>
+                <br>
+                <label for="tujuanorganisasi_id">Tujuan Organisasi</label>
+                <select name="tujuanorganisasi_id" id="tujuanorganisasi_id">
+                    @foreach ($allTujuanOrganisasi as $item)
+                    <option value="{{ $item->id }}" {{ $tujuanit->tujuanorganisasi_id == $item->id ? 'selected' : '' }}>
+                        {{ $item->{'tujuan-organisasi'} }}
+                    </option>
+                    @endforeach
+                </select>
+                <br>
+                <label for="tujuanIt">Tujuan IT:</label>
+                <textarea id="tujuanIt" name="tujuanIt" required></textarea>
                 <br>
                 <button type="submit">Save</button>
             </form>
@@ -218,11 +420,31 @@
     <!-- JavaScript -->
     <script>
         // Function to open the modal
-        function openModal(modalId) {
+        function openModal(modalId, itemId) {
             document.getElementById(modalId).style.display = "block";
-        }
+            console.log("Opening modal for itemId:", itemId);
 
-        // Function to close the modal
+
+            // Update the form action dynamically based on modalId
+            let formId, routeTemplate;
+            if (modalId === "editTujuanIt") {
+                formId = "editTujuanItForm";
+                routeTemplate = "{{ route('organisasi.editTujuanIt', ':id') }}";
+            } else if (modalId === "edittujuanOrganisasiModals") {
+                formId = "editTujuanOrganisasiForm";
+                routeTemplate = "{{ route('organisasi.updateTujuan', ':id') }}";
+            }
+
+            // Replace ':id' in the route template and update the form action
+            if (formId) {
+                let formAction = routeTemplate.replace(':id', itemId); // Replace ':id' with actual itemId
+                document.getElementById(formId).action = formAction;
+                console.log("Form action for modal:", formAction);
+                 // Use formAction here
+            }
+
+
+        }
         function closeModal(modalId) {
             document.getElementById(modalId).style.display = "none";
         }
@@ -233,6 +455,74 @@
             document.getElementById(contentId).innerText = content;
             closeModal(textareaId.replace("Textarea", "Modal"));
         }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const options = {
+                Financial: [
+                    { value: "F1 : Stakeholder value of business investments", text: "F1 : Stakeholder value of business investments" },
+                    { value: "F2 : Portfolio of competitive products and services", text: "F2 : Portfolio of competitive products and services" },
+                    { value: "F3 : Managed business risk (safeguarding of assets)", text: "F3 : Managed business risk (safeguarding of assets)" },
+                    { value: "F4 : Compliance with external laws and regulations", text: "F4 : Compliance with external laws and regulations" },
+                    { value: "F5 : Financial transparency", text: "F5 : Financial transparency" },
+                ],
+                Customer: [
+                    { value: "C6 : Customer-oriented service culture", text: "C6 : Customer-oriented service culture" },
+                    { value: "C7 : Business service continuity and availability", text: "C7 : Business service continuity and availability" },
+                    { value: "C8 : Agile responses to a changing business environment", text: "C8 : Agile responses to a changing business environment" },
+                    { value: "C9 : Information-based strategic decision making", text: "C9 : Information-based strategic decision making" },
+                    { value: "C10 : Optimisation of service delivery costs", text: "C10 : Optimisation of service delivery costs" },
+                ],
+                "Internal Process": [
+                    { value: "I11 : Optimisation of business process functionality", text: "I11 : Optimisation of business process functionality" },
+                    { value: "I12 : Optimisation of business process costs", text: "I12 : Optimisation of business process costs" },
+                    { value: "I13 : Managed business change programmes", text: "I13 : Managed business change programmes" },
+                    { value: "I14 : Operational and staff productivity", text: "I14 : Operational and staff productivity" },
+                    { value: "I15 : Compliance with internal policies", text: "I15 : Compliance with internal policies" },
+                ],
+                Learning: [
+                    { value: "L16 : Skilled and motivated people", text: "L16 : Skilled and motivated people" },
+                    { value: "L17 : Product and business innovation culture", text: "L17 : Product and business innovation culture" },
+                ],
+            };
+
+            const dimensiSelect = document.getElementById("dimensi");
+            const egoalSelect = document.getElementById("egoal");
+            const editDimensiSelect = document.getElementById("editDimensi");
+            const editEgoalSelect = document.getElementById("editEgoal");
+
+            // Function to filter the options based on the selected dimension
+            function filterOptions(selectedDimensi, selectElement) {
+                console.log("Selected Dimensi:", selectedDimensi);
+                selectElement.innerHTML = ""; // Clear all existing options
+                if (options[selectedDimensi]) {
+                    options[selectedDimensi].forEach(option => {
+                        const opt = document.createElement("option");
+                        opt.value = option.value;
+                        opt.textContent = option.text;
+                        selectElement.appendChild(opt);
+                    });
+                }
+            }
+
+            // Listen for changes in the Dimensi dropdown for create form
+            dimensiSelect.addEventListener("change", function () {
+                const selectedDimensi = dimensiSelect.value;
+                filterOptions(selectedDimensi, egoalSelect);
+            });
+
+            // Listen for changes in the Dimensi dropdown for edit form
+            editDimensiSelect.addEventListener("change", function () {
+                const selectedDimensi = editDimensiSelect.value;
+                filterOptions(selectedDimensi, editEgoalSelect);
+            });
+
+            // Initialize with the default value for create form
+            filterOptions(dimensiSelect.value, egoalSelect);
+            // Initialize with the default value for edit form
+            filterOptions(editDimensiSelect.value, editEgoalSelect);
+        });
+
+
     </script>
 </body>
 </html>

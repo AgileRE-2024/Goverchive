@@ -130,6 +130,13 @@ a {
     border: none;
 }
 
+#tahunDropdown {
+    padding: 10px;
+    font-size: 20px;
+    margin-bottom: 20px;
+    border: none;
+}
+
 table {
     width: 80%;
     margin: 20px auto;
@@ -193,6 +200,16 @@ button {
     color: white;
     border: none;
     cursor: pointer;
+}
+
+.btn-edit {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #6a7eab;
+    color: white;
+    border: none;
+    cursor: pointer;
+    size: 20px;
 }
 
 button:hover {
