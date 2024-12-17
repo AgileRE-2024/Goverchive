@@ -93,12 +93,13 @@
                     <h3>Roadmap Divisi 1</h3>
                     <!-- Button to add new row -->
                     <div>
-                        <label for="section-select">Select Section to Add Program: </label>
+                        <label for="section-select">Tambahkan Program : </label>
                         <button onclick="openForm()">Add New</button>
                         <form action="{{ route('roadmap.export',  ['tahunRoadmap' => ':year']) }}" method="GET">
                             <button type="submit" class="btn btn-success">Export Roadmap <span class="selectedYear"></span></button>
                         </form>
                     </div>
+
 
                     <table class="roadmap-table" id="roadmapTable">
                         <thead>
@@ -118,16 +119,19 @@
                                 <th>Target</th>
                                 <th>Realisasi</th>
                                 <th rowspan="2">Aksi</th>
+
                                 </tr>
                                 <tr>
-                                    <th>BSC*</th>
+                                    <th>IT Goals</th>
                                     <th>Program</th>
                                     <th>Kegiatan</th>
+
                                     <th><span class="selectedYear"></span></th>
                                     <th><span class="nextYear"></th>
                                     <th><span class="nextYear"></th>
                                     <th><span class="nextNextYear"></th>
                                     <th><span class="nextNextYear"</th>
+
                                 </tr>
                             </thead>
                             <thead>
@@ -568,11 +572,13 @@
                                 </div>
 
                                 <div class="roadmapform-content">
+
                                     <label for="tujuanIt">Tujuan IT:</label>
                                     <select id="tujuanIt" name="tujuanIt">
                                         @foreach ( $tujuanit as $item)
                                         <option value="{{$item->id}}">{{$item->tujuanIt}}</option>
                                         @endforeach
+
                                     </select>
                                 </div>
 
@@ -611,6 +617,7 @@
                                 </div>
 
                                 <div class="roadmapform-content">
+
                                     <label for="realisasi{{ date('Y') + 1 }}">Realisasi <span class="nextYear">:</label>
                                     <input type="text" id="realisasi" name="realisasi">
                                 </div>
@@ -684,6 +691,8 @@
         function closeForm() {
             document.getElementById("formPopup").style.display = "none";
             document.getElementById("editModal").style.display = "none";
+
+
 
 
         }
