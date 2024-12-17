@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('dimensi',100)->nullable(false);
             $table->unsignedBigInteger('tujuanorganisasi_id')->nullable(false);
             $table->string('tujuanIt',500)->nullable(false);
-            $table->foreign('tujuanorganisasi_id')->references('id')->on('tujuan-organisasi');
+            $table->foreign('tujuanorganisasi_id')->references('id')->on('tujuan-organisasi')->onDelete('cascade');
 
         });
     }

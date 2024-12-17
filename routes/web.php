@@ -1,14 +1,19 @@
 <?php
 
+use App\Exports\RoadmapExport;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\RoadmapController;
 use App\Http\Controllers\unitKerjaController;
 use App\Http\Controllers\unitUtamaController;
+use App\Models\Roadmap;
+use App\Models\TahunRoadmap;
+use App\Models\TujuanIt;
 use App\Models\UnitKerja;
 use App\Models\unitUtama;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-
+use Maatwebsite\Excel\Facades\Excel;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,6 +70,18 @@ Route::post('/unit/store-unit', [unitKerjaController::class,'store'])->name('uni
 Route::delete('/unit/{id}',[unitKerjaController::class, 'destroy'])->name('unit.destroy')->middleware('auth');
 Route::put('/unit/{id}', [unitKerjaController::class, 'update'])->name('unit.update')->middleware('auth');
 
+Route::post('/roadmap/store-tahunroadmap',[RoadmapController::class,'storetahun'])->name('roadmap.storetahun')->middleware('auth');
+Route::post('/roadmap/destroytahun', [RoadmapController::class, 'destroytahun'])->name('roadmap.destroytahun');
+Route::post('/roadmap/store-roadmap',[RoadmapController::class,'store'])->name('roadmap.store')->middleware('auth');
+Route::delete('/roadmap/{id}',[RoadmapController::class, 'destroyRoadmap'])->name('roadmap.destroy')->middleware('auth');
+Route::put('/roadmap/{id}',[RoadmapController::class, 'editRoadmap'])->name('roadmap.update')->middleware('auth');
+Route::get('/roadmap/{tahunRoadmap}', function ($tahunRoadmap) {
+    return Excel::download(new RoadmapExport($tahunRoadmap), "roadmap_$tahunRoadmap.xlsx");
+})->name('roadmap.export');
+
+
+
+
 
 Route::get('/unit', function () {
     $unit = UnitKerja::all();
@@ -72,7 +89,16 @@ Route::get('/unit', function () {
 })->middleware('auth');
 
 Route::get('/roadmap', function () {
-    return view('roadmap');
+    $roadmaps = Roadmap::with(['tujuanIts', 'unitKerja'])->get();
+    $tujuanit = TujuanIt::all();
+    $unitkerja = UnitKerja::all();
+    $tahun_roadmap = TahunRoadmap::all();
+    return view('roadmap',[
+        'roadmaps'=>$roadmaps,
+        'tujuanit' => $tujuanit,
+        'unitkerja' => $unitkerja,
+        'tahun_roadmap' => $tahun_roadmap,
+    ]);
 })->middleware('auth');
 
 Route::get('/histori', function () {

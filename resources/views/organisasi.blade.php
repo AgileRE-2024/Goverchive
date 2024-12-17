@@ -121,7 +121,7 @@
                 <div class="visi">
                     <h2>Visi dan Misi Organisasi</h2>
                     @if(Auth::user()->posisi == 'manajer')
-                        <i class='bx bx-edit' onclick="openModal('visiModal')"></i>
+                        <i class='bx bx-edit' onclick="openModal('visiModal')" ></i>
                     @endif
 
                 </div>
@@ -137,7 +137,7 @@
                 <div class="headertujuan">
                     <h2>Tujuan Organisasi</h2>
                     @if(Auth::user()->posisi == 'manajer')
-                    <i class='bx bx-edit '  onclick="openModal('createTujuanOrganisasiModals')"></i>
+                    <i class='bx bx-edit'  onclick="openModal('createTujuanOrganisasiModals') " data-testid="edit-icon"></i>
                     @endif
                 </div>
                 <div class="tujuanIT2">
@@ -173,7 +173,7 @@
                 <div class="headertujuan">
                     <h2>Tujuan IT</h2>
                     @if(Auth::user()->posisi == 'manajer')
-                    <i class='bx bx-edit' onclick="openModal('createTujuanItModals')"></i>
+                    <i class='bx bx-edit' onclick="openModal('createTujuanItModals')" data-testid="edit-icons"></i>
                     @endif
                 </div>
 
@@ -192,7 +192,7 @@
                                     <tr>
                                         <td>
                                             <div class="edit-delete-tujuanit">
-                                                <i class='bx bx-edit' data-id="{{ $item->id }}" onclick="openModal('editTujuanIt', {{ $item->id }})"></i>
+                                                <i class='bx bx-edit' data-id="{{ $item->id }}" onclick="openModal('editTujuanIt', {{ $item->id }})" data-testid="{{$item->id}}" ></i>
                                                 <form action="{{route('organisasi.destroytujuanit', $item->id) }}" method="POST" onsubmit="return confirm('Delete?')">
                                                     @csrf
                                                     @method('DELETE')
@@ -275,31 +275,7 @@
 
                 <label for="egoal">Enterprise Goal:</label>
                 <select id="egoal" name="egoal" required>
-                    <!-- Financial -->
-                    <option value="F1 : Stakeholder value of business investments">F1 : Stakeholder value of business investments</option>
-                    <option value="F2 : Portfolio of competitive products and services">F2 : Portfolio of competitive products and services</option>
-                    <option value="F3 : Managed business risk (safeguarding of assets)">F3 : Managed business risk (safeguarding of assets)</option>
-                    <option value="F4 : Compliance with external laws and regulations">F4 : Compliance with external laws and regulations</option>
-                    <option value="F5 : Financial transparency">F5 : Financial transparency</option>
-
-                    <!-- Customer -->
-                    <option value="C6 : Customer-oriented service culture">C6 : Customer-oriented service culture</option>
-                    <option value="C7 : Business service continuity and availability">C7 : Business service continuity and availability</option>
-                    <option value="C8 : Agile responses to a changing business environment">C8 : Agile responses to a changing business environment</option>
-                    <option value="C9 : Information-based strategic decision making">C9 : Information-based strategic decision making</option>
-                    <option value="C10 : Optimisation of service delivery costs">C10 : Optimisation of service delivery costs</option>
-
-                    <!-- Internal -->
-                    <option value="I11 : Optimisation of business process functionality">I11 : Optimisation of business process functionality</option>
-                    <option value="I12 : Optimisation of business process costs">I12 : Optimisation of business process costs</option>
-                    <option value="I13 : Managed business change programmes">I13 : Managed business change programmes</option>
-                    <option value="I14 : Operational and staff productivity">I14 : Operational and staff productivity</option>
-                    <option value="I15 : Compliance with internal policies">I15 : Compliance with internal policies</option>
-
-                    <!-- Learning and Growth -->
-                    <option value="L16 : Skilled and motivated people">L16 : Skilled and motivated people</option>
-                    <option value="L17 : Product and business innovation culture">L17 : Product and business innovation culture</option>
-
+                    <!-- Options will be dynamically loaded here -->
                 </select>
                 <br>
 
@@ -370,41 +346,18 @@
             <form id="editTujuanOrganisasiForm" action="{{ route('organisasi.updateTujuan', ':id') }}" method="POST">
                 @method('PUT')
                 @csrf
-                <label for="dimensi">Dimensi:</label>
-                <select id="dimensi" name="dimensi" required>
-                    <option value="Financial" >Financial</option>
-                    <option value="Customer" >Customer</option>
-                    <option value="Internal Process" >Internal Process</option>
+                <label for="editDimensi">Dimensi:</label>
+                <select id="editDimensi" name="dimensi" required>
+                    <option value="Financial">Financial</option>
+                    <option value="Customer">Customer</option>
+                    <option value="Internal Process">Internal Process</option>
                     <option value="Learning">Learning</option>
                 </select>
                 <br>
-                <label for="egoal">Enterprise Goal:</label>
-                <select id="egoal" name="egoal" required>
-                    <!-- Financial -->
-                    <option value="F1 : Stakeholder value of business investments">F1 : Stakeholder value of business investments</option>
-                    <option value="F2 : Portfolio of competitive products and services">F2 : Portfolio of competitive products and services</option>
-                    <option value="F3 : Managed business risk (safeguarding of assets)">F3 : Managed business risk (safeguarding of assets)</option>
-                    <option value="F4 : Compliance with external laws and regulations">F4 : Compliance with external laws and regulations</option>
-                    <option value="F5 : Financial transparency">F5 : Financial transparency</option>
 
-                    <!-- Customer -->
-                    <option value="C6 : Customer-oriented service culture">C6 : Customer-oriented service culture</option>
-                    <option value="C7 : Business service continuity and availability">C7 : Business service continuity and availability</option>
-                    <option value="C8 : Agile responses to a changing business environment">C8 : Agile responses to a changing business environment</option>
-                    <option value="C9 : Information-based strategic decision making">C9 : Information-based strategic decision making</option>
-                    <option value="C10 : Optimisation of service delivery costs">C10 : Optimisation of service delivery costs</option>
-
-                    <!-- Internal -->
-                    <option value="I11 : Optimisation of business process functionality">I11 : Optimisation of business process functionality</option>
-                    <option value="I12 : Optimisation of business process costs">I12 : Optimisation of business process costs</option>
-                    <option value="I13 : Managed business change programmes">I13 : Managed business change programmes</option>
-                    <option value="I14 : Operational and staff productivity">I14 : Operational and staff productivity</option>
-                    <option value="I15 : Compliance with internal policies">I15 : Compliance with internal policies</option>
-
-                    <!-- Learning and Growth -->
-                    <option value="L16 : Skilled and motivated people">L16 : Skilled and motivated people</option>
-                    <option value="L17 : Product and business innovation culture">L17 : Product and business innovation culture</option>
-
+                <label for="editEgoal">Enterprise Goal:</label>
+                <select id="editEgoal" name="egoal" required>
+                    <!-- Options will be dynamically loaded here -->
                 </select>
                 <br>
                 <label for="tujuan-organisasi">Tujuan Organisasi:</label>
@@ -489,6 +442,8 @@
                 console.log("Form action for modal:", formAction);
                  // Use formAction here
             }
+
+
         }
         function closeModal(modalId) {
             document.getElementById(modalId).style.display = "none";
@@ -500,6 +455,72 @@
             document.getElementById(contentId).innerText = content;
             closeModal(textareaId.replace("Textarea", "Modal"));
         }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const options = {
+                Financial: [
+                    { value: "F1 : Stakeholder value of business investments", text: "F1 : Stakeholder value of business investments" },
+                    { value: "F2 : Portfolio of competitive products and services", text: "F2 : Portfolio of competitive products and services" },
+                    { value: "F3 : Managed business risk (safeguarding of assets)", text: "F3 : Managed business risk (safeguarding of assets)" },
+                    { value: "F4 : Compliance with external laws and regulations", text: "F4 : Compliance with external laws and regulations" },
+                    { value: "F5 : Financial transparency", text: "F5 : Financial transparency" },
+                ],
+                Customer: [
+                    { value: "C6 : Customer-oriented service culture", text: "C6 : Customer-oriented service culture" },
+                    { value: "C7 : Business service continuity and availability", text: "C7 : Business service continuity and availability" },
+                    { value: "C8 : Agile responses to a changing business environment", text: "C8 : Agile responses to a changing business environment" },
+                    { value: "C9 : Information-based strategic decision making", text: "C9 : Information-based strategic decision making" },
+                    { value: "C10 : Optimisation of service delivery costs", text: "C10 : Optimisation of service delivery costs" },
+                ],
+                "Internal Process": [
+                    { value: "I11 : Optimisation of business process functionality", text: "I11 : Optimisation of business process functionality" },
+                    { value: "I12 : Optimisation of business process costs", text: "I12 : Optimisation of business process costs" },
+                    { value: "I13 : Managed business change programmes", text: "I13 : Managed business change programmes" },
+                    { value: "I14 : Operational and staff productivity", text: "I14 : Operational and staff productivity" },
+                    { value: "I15 : Compliance with internal policies", text: "I15 : Compliance with internal policies" },
+                ],
+                Learning: [
+                    { value: "L16 : Skilled and motivated people", text: "L16 : Skilled and motivated people" },
+                    { value: "L17 : Product and business innovation culture", text: "L17 : Product and business innovation culture" },
+                ],
+            };
+
+            const dimensiSelect = document.getElementById("dimensi");
+            const egoalSelect = document.getElementById("egoal");
+            const editDimensiSelect = document.getElementById("editDimensi");
+            const editEgoalSelect = document.getElementById("editEgoal");
+
+            // Function to filter the options based on the selected dimension
+            function filterOptions(selectedDimensi, selectElement) {
+                console.log("Selected Dimensi:", selectedDimensi);
+                selectElement.innerHTML = ""; // Clear all existing options
+                if (options[selectedDimensi]) {
+                    options[selectedDimensi].forEach(option => {
+                        const opt = document.createElement("option");
+                        opt.value = option.value;
+                        opt.textContent = option.text;
+                        selectElement.appendChild(opt);
+                    });
+                }
+            }
+
+            // Listen for changes in the Dimensi dropdown for create form
+            dimensiSelect.addEventListener("change", function () {
+                const selectedDimensi = dimensiSelect.value;
+                filterOptions(selectedDimensi, egoalSelect);
+            });
+
+            // Listen for changes in the Dimensi dropdown for edit form
+            editDimensiSelect.addEventListener("change", function () {
+                const selectedDimensi = editDimensiSelect.value;
+                filterOptions(selectedDimensi, editEgoalSelect);
+            });
+
+            // Initialize with the default value for create form
+            filterOptions(dimensiSelect.value, egoalSelect);
+            // Initialize with the default value for edit form
+            filterOptions(editDimensiSelect.value, editEgoalSelect);
+        });
 
 
     </script>

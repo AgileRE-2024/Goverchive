@@ -93,7 +93,7 @@
                             <form action="{{route('unit.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Delete?')">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit">
+                                <button type="submit" data-id="{{ $item->id }}">
                                     <i class='bx bx-trash'></i>
                                 </button>
                             </form>
@@ -134,16 +134,16 @@
                 @csrf
                 @method('PUT')
                 <label for="unitDeskripsi">Deskripsi Unit:</label>
-                <textarea id="editDeskripsiUnit" name="deskripsi_unit" required></textarea>
+                <textarea id="editDeskripsiUnits" name="deskripsi_unit" required></textarea>
                 <br>
                 <label for="unitTugasPokok">Tugas Pokok:</label>
-                <textarea id="editTugasPokok" name="tugas_pokok" required></textarea>
+                <textarea id="editTugasPokoks" name="tugas_pokok" required></textarea>
                 <br>
                 <label for="unitUIC">Unit In Charge:</label>
-                <input type="text" id="editUIC" name="uic" required>
+                <input type="text" id="editUICs" name="uic" required>
                 <br>
                 <label for="unitAlamat">Alamat:</label>
-                <textarea id="editAlamat" name="alamat" required></textarea>
+                <textarea id="editAlamats" name="alamat" required></textarea>
                 <br>
                 <button type="submit">Save</button>
             </form>
@@ -162,16 +162,16 @@
                 <input type="text" id="nama_divisi" name="nama_divisi" required>
                 <br>
                 <label for="deskripsiUnit">Deskripsi Unit:</label>
-                <textarea id="deskripsi_unit" name="deskripsi_unit" required></textarea>
+                <textarea id="deskripsi_units" name="deskripsi_unit" required></textarea>
                 <br>
                 <label for="tugasPokok">Tugas Pokok:</label>
-                <textarea id="tugas_pokok" name="tugas_pokok" required></textarea>
+                <textarea id="tugas_pokoks" name="tugas_pokok" required></textarea>
                 <br>
                 <label for="unitInCharge">Unit In Charge:</label>
-                <input type="text" id="uic" name="uic" required>
+                <input type="text" id="uics" name="uic" required>
                 <br>
                 <label for="alamat">Alamat:</label>
-                <textarea id="alamat" name="alamat" required></textarea>
+                <textarea id="alamats" name="alamat" required></textarea>
                 <br>
                 <button type="submit">Save</button>
             </form>

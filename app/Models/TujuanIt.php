@@ -23,4 +23,8 @@ class TujuanIt extends Model
     {
         return $this->belongsTo(TujuanOrganisasi::class, 'tujuanorganisasi_id', 'id');
     }
+
+    public function roadmap(){
+        return $this->hasMany(Roadmap::class);
+    }
 }
