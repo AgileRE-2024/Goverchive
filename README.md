@@ -6,10 +6,13 @@
    Git Clone https://github.com/AgileRE-2024/Goverchive.git
    ```
    kemudian buka file yang di clone pada vscode
-4. Pada vscode buat new terminal dan lakukan Composer install
-5. Cari file .env.example kemudian copy dan paste file tersebut, rename file hasil copy menjadi .env
-6. Pastikan anda telah membuat database baru pada phpmyadmin (misal: goverchive)
-7. Ubah DB_DATABASE menjadi nama database yang baru anda buat (misal: goverchive)
+4. Pada vscode buat new terminal dan lakukan
+   ```
+   Composer install
+   ```
+6. Cari file .env.example kemudian copy dan paste file tersebut, rename file hasil copy menjadi .env
+7. Pastikan anda telah membuat database baru pada phpmyadmin (misal: goverchive)
+8. Ubah DB_DATABASE menjadi nama database yang baru anda buat (misal: goverchive)
    ```
     DB_HOST=127.0.0.1
     DB_PORT=3306
@@ -17,7 +20,7 @@
     DB_USERNAME=root
     DB_PASSWORD=   
    ```
-8. Kemudian kembali pada terminal
+9. Kemudian kembali pada terminal
    ```
    php artisan migrate
    ```
