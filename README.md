@@ -1,4 +1,4 @@
-##Tutorial Instalasi
+## Tutorial Instalasi
 
 1. Buat sebuah folder baru kemudian buka folder tersebut di terminal
 2. lakukan Git Clone kemudian buka file yang di clone pada vscode
