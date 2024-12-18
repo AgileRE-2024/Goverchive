@@ -18,7 +18,9 @@
    php artisan migrate
    ```
 10. lakukan generate key juga
-    ```php artisan key:generate```
+    ```
+    php artisan key:generate
+    ```
 12. buat user admin manual pada terminal
 	php artisan make:seeder UserSeeder
     kemudian pada file Goverchive\database\seeders\UserSeeder.php masukan syntax berikut
