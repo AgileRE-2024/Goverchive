@@ -55,6 +55,12 @@
         }
     }
     ```
-    kemudian pada terminal php artisan db:seed --class=UserSeeder
-14. php artisan serve
-15. login dengan email ```admin@gmail.com``` dan ```password123```
+    kemudian pada terminal
+    ```
+    php artisan db:seed --class=UserSeeder
+    ```
+14. Selanjutnya buka website
+    ```
+    php artisan serve
+    ```
+16. login dengan email ```admin@gmail.com``` dan ```password123```
