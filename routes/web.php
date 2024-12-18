@@ -28,7 +28,7 @@ use Maatwebsite\Excel\Facades\Excel;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Route::get('/home', function () {
@@ -75,8 +75,8 @@ Route::post('/roadmap/destroytahun', [RoadmapController::class, 'destroytahun'])
 Route::post('/roadmap/store-roadmap',[RoadmapController::class,'store'])->name('roadmap.store')->middleware('auth');
 Route::delete('/roadmap/{id}',[RoadmapController::class, 'destroyRoadmap'])->name('roadmap.destroy')->middleware('auth');
 Route::put('/roadmap/{id}',[RoadmapController::class, 'editRoadmap'])->name('roadmap.update')->middleware('auth');
-Route::get('/roadmap/{tahunRoadmap}', function ($tahunRoadmap) {
-    return Excel::download(new RoadmapExport($tahunRoadmap), "roadmap_$tahunRoadmap.xlsx");
+Route::get('/roadmap/{tahunRoadmap}/{division}', function ($tahunRoadmap, $division) {
+    return Excel::download(new RoadmapExport($tahunRoadmap, $division), "roadmap_$tahunRoadmap.xlsx");
 })->name('roadmap.export');
 
 

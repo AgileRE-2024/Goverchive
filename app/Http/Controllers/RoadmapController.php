@@ -10,23 +10,29 @@ class RoadmapController extends Controller
 {
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'kategori' => ['required','max:200','string'],
-            'tujuanIt' => ['required','max:100','integer'],
-            'indikator' => ['required','max:200','string'],
-            'program'=>['required','max:300','string'],
-            'kegiatan' => ['required','max:300','string'],
-            'uic' => ['required','max:100','integer'],
-            'baseline' => ['required','max:400','string'],
-            'target' => ['required','max:400','string'],
-            'realisasi' => ['required','max:400','string'],
-            'target_2' => ['required','max:400','string'],
-            'realisasi_2' => ['required','max:400','string'],
-            'tahun_roadmap' => ['required','max:20','integer'],
+        $request->validate([
+            'tahun_roadmap' => 'required|exists:tahun_roadmap,id',  // Validasi tahun_roadmap
+            'uic' => 'required|exists:unit-kerja,id',  // Validasi uic
+            // Validasi input lainnya
         ]);
 
-        Roadmap::create($validatedData);
-        return redirect('/roadmap');
+        // Proses penyimpanan data
+        $roadmap = new Roadmap();
+        $roadmap->tahun_roadmap = $request->tahun_roadmap;
+        $roadmap->uic = $request->uic;
+        $roadmap->kategori = $request->kategori;
+        $roadmap->tujuanIt = $request->tujuanIt;
+        $roadmap->indikator = $request->indikator;
+        $roadmap->program = $request->program;
+        $roadmap->kegiatan = $request->kegiatan;
+        $roadmap->baseline = $request->baseline;
+        $roadmap->target = $request->target;
+        $roadmap->realisasi = $request->realisasi;
+        $roadmap->target_2 = $request->target_2;
+        $roadmap->realisasi_2 = $request->realisasi_2;
+        $roadmap->save();
+
+        return redirect('/roadmap')->with('success', 'Roadmap created successfully!');
     }
 
     public function editRoadmap(Request $request, $id)

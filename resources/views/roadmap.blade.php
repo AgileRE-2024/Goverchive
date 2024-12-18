@@ -68,34 +68,35 @@
             </div>
             <div class="divisi">
                 <select id="divisionDropdown" onchange="filterByDivision()">
+                    <option value="">Pilih Divisi</option>
                     @foreach ($unitkerja as $index => $item)
-                        <option value="{{$item->id}}" {{ $index === 0 ? 'selected' : '' }}>{{$item->nama_divisi}}</option>
+                        <option value="{{$item->id}}">{{$item->nama_divisi}}</option>
                     @endforeach
-
                 </select>
             </div>
-            <button onclick="opentahunForm()">Tambah Tahun</button>
+            <div><button onclick="opentahunForm()">Tambah Tahun</button></div>
+
             <div class="divisi" style="margin-top: 20px">
                 <select id="tahunDropdown" onchange="filterByYear()">
+                    <option value="">Tahun Roadmap</option>
                     @foreach ($tahun_roadmap as $index => $item)
-                    <option value="{{$item->id}}" {{ $index === 0 ? 'selected' : '' }}>{{$item->tahun}}</option>
-                @endforeach
-
+                        <option value="{{$item->id}}">{{$item->tahun}}</option>
+                    @endforeach
                 </select>
             </div>
 
-            <button onclick="deleteSelectedYear()">Delete Tahun</button>
+            <div><button onclick="deleteSelectedYear()">Delete Tahun</button></div>
 
 
             <!-- Roadmap Content -->
             <div id="roadmapContent">
                 <div id="divisi1" class="roadmapSection">
-                    <h3>Roadmap Divisi 1</h3>
+
                     <!-- Button to add new row -->
                     <div>
                         <label for="section-select">Select Section to Add Program: </label>
                         <button onclick="openForm()">Add New</button>
-                        <form action="{{ route('roadmap.export',  ['tahunRoadmap' => ':year']) }}" method="GET">
+                        <form action="{{ route('roadmap.export', ['tahunRoadmap' => ':year', 'division' => ':division']) }}" method="GET" id="exportForm">
                             <button type="submit" class="btn btn-success">Export Roadmap <span class="selectedYear"></span></button>
                         </form>
                     </div>
@@ -691,11 +692,14 @@
         document.getElementById("tahunDropdown").addEventListener("change", function() {
             var selectedYear = this.options[this.selectedIndex].value; // Mengambil ID tahun yang dipilih
             document.getElementById("tahun_roadmap").value = selectedYear; // Menyimpan ID tahun di input tersembunyi
+            console.log("Selected Year:", selectedYear);
         });
 
         document.getElementById("divisionDropdown").addEventListener("change", function () {
             var selectedDivision = this.options[this.selectedIndex].value; // Mengambil ID divisi yang dipilih
             document.getElementById("uic").value = selectedDivision; // Menyimpan ID divisi di input tersembunyi
+            console.log("Selected Division:", selectedDivision);
+
         });
 
 
@@ -729,27 +733,32 @@
 
     // Fungsi untuk menyaring data berdasarkan divisi dan tahun
     function filterTable() {
-        var selectedDivision = divisionDropdown.value; // ID divisi yang dipilih
-        var selectedYear = yearDropdown.value; // ID tahun yang dipilih
+    var selectedDivision = divisionDropdown.value; // ID divisi yang dipilih
+    var selectedYear = yearDropdown.value; // ID tahun yang dipilih
 
-        // Ambil semua baris data di tabel
-        var rows = document.querySelectorAll("#roadmapTable tbody tr");
+    // Ambil semua baris data di tabel
+    var rows = document.querySelectorAll("#roadmapTable tbody tr");
 
-        rows.forEach(function (row) {
-            var uic = row.getAttribute("data-uic"); // ID divisi pada baris
-            var tahunRoadmap = row.getAttribute("data-tahun-roadmap"); // Tahun pada baris
+    rows.forEach(function (row) {
+        var uic = row.getAttribute("data-uic"); // ID divisi pada baris
+        var tahunRoadmap = row.getAttribute("data-tahun-roadmap"); // Tahun pada baris
 
-            // Logika penyaringan: tampilkan baris jika divisi dan tahun cocok
-            if (
-                (selectedDivision === "" || uic === selectedDivision) &&
-                (selectedYear === "" || tahunRoadmap === selectedYear)
-            ) {
-                row.style.display = ""; // Tampilkan baris
-            } else {
-                row.style.display = "none"; // Sembunyikan baris
-            }
-        });
-    }
+        // Logika penyaringan: tampilkan baris hanya jika divisi dan tahun cocok
+        if (
+            selectedDivision !== "" && uic === selectedDivision &&
+            selectedYear !== "" && tahunRoadmap === selectedYear
+        ) {
+            row.style.display = ""; // Tampilkan baris
+        } else {
+            row.style.display = "none"; // Sembunyikan baris
+        }
+    });
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Panggil fungsi untuk menyembunyikan data awal
+    filterTable();
+});
 
     // Event listener saat dropdown divisi atau tahun berubah
     divisionDropdown.addEventListener("change", function () {
@@ -764,6 +773,21 @@
     // Inisialisasi filter saat halaman dimuat pertama kali
     updateYearDisplay(); // Update tampilan tahun pertama kali
     filterTable(); // Filter data pertama kali
+
+    // --- Menambahkan script untuk form export ---
+    document.getElementById('exportForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Mencegah form submit secara default
+
+        var selectedYear = document.getElementById("tahunDropdown").value;
+        var selectedDivision = document.getElementById("divisionDropdown").value;
+
+        // Update action URL dengan tahun dan divisi yang dipilih
+        var formAction = '{{ route('roadmap.export', ['tahunRoadmap' => ':year', 'division' => ':division']) }}';
+        formAction = formAction.replace(':year', selectedYear).replace(':division', selectedDivision);
+
+        this.action = formAction; // Update form action dengan URL yang baru
+        this.submit(); // Kirim form setelah action diperbarui
+    });
 });
 
 function deleteSelectedYear() {
@@ -803,6 +827,26 @@ function deleteSelectedYear() {
     }
 }
 
+
+divisionDropdown.addEventListener("change", function () {
+    localStorage.setItem("selectedDivision", divisionDropdown.value); // Simpan pilihan divisi
+});
+
+yearDropdown.addEventListener("change", function () {
+    localStorage.setItem("selectedYear", yearDropdown.value); // Simpan pilihan tahun
+});
+
+// Baca nilai yang tersimpan di localStorage
+var savedDivision = localStorage.getItem("selectedDivision");
+var savedYear = localStorage.getItem("selectedYear");
+
+if (savedDivision) {
+    divisionDropdown.value = savedDivision;
+}
+
+if (savedYear) {
+    yearDropdown.value = savedYear;
+}
         function openEditModal(event, id) {
             const button = event.currentTarget;
 
