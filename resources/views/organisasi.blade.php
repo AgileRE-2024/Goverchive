@@ -403,7 +403,8 @@
                 <label for="tujuanorganisasi_id">Tujuan Organisasi</label>
                 <select name="tujuanorganisasi_id" id="tujuanorganisasi_id">
                     @foreach ($allTujuanOrganisasi as $item)
-                    <option value="{{ $item->id }}" {{ $tujuanit->tujuanorganisasi_id == $item->id ? 'selected' : '' }}>
+                    <option value="{{ $item->id }}"
+                        {{ isset($tujuanit) && $tujuanit->tujuanorganisasi_id == $item->id ? 'selected' : '' }}>
                         {{ $item->{'tujuan-organisasi'} }}
                     </option>
                     @endforeach

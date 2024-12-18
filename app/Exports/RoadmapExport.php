@@ -11,11 +11,13 @@ class RoadmapExport implements FromQuery, WithHeadings
 {
     protected $year;
     protected $tahunRoadmap;
+    protected $division;
 
 
-    public function __construct( $tahunRoadmap)
+    public function __construct( $tahunRoadmap, $division)
     {
         $this->tahunRoadmap = $tahunRoadmap;
+        $this->division = $division;
     }
 
     /**
